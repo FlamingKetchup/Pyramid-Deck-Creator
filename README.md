@@ -1,3 +1,3 @@
-# Pyramid-Deck-Creator
+# Pyramid Deck Creator
 Online deck creator for the Pyramid
 
