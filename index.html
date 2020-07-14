@@ -4,14 +4,16 @@
 <head>
 
 <link rel="stylesheet" type="text/css" href="stylesheet.css">
-<script src="script.js" defer></script>
+<script src="script.js"></script>
 
 </head>
 
 <body>
 
 <h1>Pyramid Deck Creator</h1>
-<div>
+<div class="border_container">
+	<img src="cards_template.png" alt="Example card" width="200" height="207">
+	<br>
 	<label>Card Border
 		<input type="color" id="border_color">
 	</label>
@@ -19,10 +21,11 @@
 
 <fieldset id="characters">
 	<legend>Characters</legend>
-	<label>Character Icon
+	<label>Character Icon (Lower right icon)
 		<input type="file" accept="image/*" id="character_icon">
 	</label>
 	<br>
+	<button type="button" onclick="addCard('characters')" id="characters_add">+</button>
 </fieldset>
 
 <fieldset id="challenges">
@@ -31,6 +34,7 @@
 		<input type="file" accept="image/*" id="challenge_icon">
 	</label>
 	<br>
+	<button type="button" onclick="addCard('challenges')" id="challenges_add">+</button>
 </fieldset>
 
 </body>
