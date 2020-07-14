@@ -3,6 +3,8 @@
 
 <head>
 
+<title>Pyramid Deck Creator</title>
+<link rel="icon" type="image/png" href="Pyramid.png">
 <link rel="stylesheet" type="text/css" href="stylesheet.css">
 <script src="script.js"></script>
 
@@ -11,30 +13,38 @@
 <body>
 
 <h1>Pyramid Deck Creator</h1>
-<div class="border_container">
-	<img src="cards_template.png" alt="Example card" width="200" height="207">
-	<br>
-	<label>Card Border
-		<input type="color" id="border_color">
-	</label>
-</div>
+<hr>
+<form id="form">
+	<div class="border_container">
+		<img src="cards_template.png" alt="Example card" width="200" height="207">
+		<br>
+		<label>Card Border
+			<input type="color" name="borderColor" id="border_color">
+		</label>
+	</div>
 
-<fieldset id="characters">
-	<legend>Characters</legend>
-	<label>Character Icon (Lower right icon)
-		<input type="file" accept="image/*" id="character_icon">
-	</label>
-	<br>
-	<button type="button" onclick="addCard('characters')" id="characters_add">+</button>
-</fieldset>
+	<div>
+		<fieldset id="characters">
+			<legend>Characters</legend>
+			<label>Character Icon (Lower right icon)
+				<input type="file" accept="image/*" name="charactersIcon" id="characters_icon">
+			</label>
+			<br>
+			<button type="button" onclick="addCard('characters')" id="characters_add">+</button>
+		</fieldset>
 
-<fieldset id="challenges">
-	<legend>Challenges</legend>
-	<label>Challenge Icon
-		<input type="file" accept="image/*" id="challenge_icon">
-	</label>
-	<br>
-	<button type="button" onclick="addCard('challenges')" id="challenges_add">+</button>
-</fieldset>
+		<fieldset id="challenges">
+			<legend>Challenges</legend>
+			<label>Challenge Icon
+				<input type="file" accept="image/*" name="challengesIcon" id="challenges_icon">
+			</label>
+			<br>
+			<button type="button" onclick="addCard('challenges')" id="challenges_add">+</button>
+		</fieldset>
+	</div>
+
+</form>
+
+<button type="button" onclick="generateImage()" class="generate">Generate Image</button>
 
 </body>

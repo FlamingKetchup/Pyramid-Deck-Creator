@@ -3,14 +3,32 @@ div.border_container {
 	margin-bottom: 14px;
 }
 
+button.generate {
+	width: 100%;
+	margin-top: 8px;
+	background-color: DarkGray;
+	padding: 6px;
+	border: none;
+	color: white;
+	font-size: 16px;
+}
+
 input {
 	margin-top: 6px;
 	margin-bottom: 6px;
 }
 
+hr {
+	width: 50%;
+	margin-bottom: 14px;
+}
 h1 {
-	font-family: "Trebuchet MS";
+	font-family: "Segoe UI";
+	font-size: 40px;
+	font-weight: lighter;
 	text-align: center;
+	margin: 0px;
+	margin-top: 14px;
 }
 
 p, label {
