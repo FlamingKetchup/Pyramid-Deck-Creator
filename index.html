@@ -4,8 +4,9 @@
 <head>
 
 <title>Pyramid Deck Creator</title>
-<link rel="icon" type="image/png" href="Pyramid.png">
+<link rel="icon" type="image/png" href="favicon32x32.png">
 <link rel="stylesheet" type="text/css" href="stylesheet.css">
+<span style="font-family: Kreon"></span>
 <script src="script.js"></script>
 
 </head>
@@ -16,7 +17,6 @@
 <hr>
 <form id="form">
 	<div class="border_container">
-		<img src="cards_template.png" alt="Example card" width="200" height="207">
 		<br>
 		<label>Card Border
 			<input type="color" name="borderColor" id="border_color">
@@ -43,8 +43,10 @@
 		</fieldset>
 	</div>
 
+<button type="button" onclick="generateImage()" class="generate">Generate Image</button>
+
 </form>
 
-<button type="button" onclick="generateImage()" class="generate">Generate Image</button>
+<canvas width="4096" height="4096" id="preview">
 
 </body>
