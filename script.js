@@ -119,8 +119,9 @@ function generateImage() {
   if (charactersIcon !== undefined) {
     tempFile = charactersIcon;
     charactersIcon = document.createElement("img");
-    readImage(tempFile, charactersIcon)
+    readImage(tempFile, charactersIcon);
   }
+
   if (challengesIcon !== undefined) {
     tempFile = challengesIcon;
     challengesIcon = document.createElement("img");
@@ -147,10 +148,19 @@ function generateImage() {
       }
     }
     if (i < charactersText.length && charactersIcon !== undefined) {
-      charactersIcon.addEventListener("load", function() {c.drawImage(charactersIcon, posX + 347, posY + 526, 38, 38)});
+      charactersIcon.addEventListener("load", function() {
+        c.filter = "grayscale(100%)";
+        c.drawImage(charactersIcon, posX + 347, posY + 526, 38, 38);
+        c.filter = "none";
+      });
     }
     else if (challengesIcon !== undefined) {
-      challengesIcon.addEventListener("load", function() {c.drawImage(challengesIcon, posX + 347, posY + 526, 38, 38)});
+      challengesIcon.addEventListener("load", function() {
+        c.filter = "grayscale(100%)";
+        c.drawImage(challengesIcon, posX + 347, posY + 526, 38, 38)
+        c.filter = "none";
+      });
     }
+
   }
 }
