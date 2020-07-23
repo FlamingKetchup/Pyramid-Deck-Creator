@@ -5,14 +5,22 @@
 
 <title>Pyramid Deck Creator</title>
 <link rel="icon" type="image/png" href="favicon32x32.png">
-<link rel="stylesheet" type="text/css" href="stylesheet.css">
+<link rel="stylesheet" href="stylesheet.css">
+<link rel="stylesheet" href="dist/cropper.min.css">
 <span style="font-family: Kreon"></span>
+<script src="dist/cropper.min.js"></script>
 <script src="script.js"></script>
 
 </head>
 
 <body>
 
+<div class="modal-background" id="cropModalBackground">
+	<div class="modal" id="cropModal">
+		<img style="max-width: 100%" id="modalImage">
+		<button type="button" class="generate" id="modalButton">Crop</button>
+	</div>
+</div>
 <h1>Pyramid Deck Creator</h1>
 <hr>
 <form id="form">
@@ -27,7 +35,7 @@
 		<fieldset id="characters">
 			<legend>Characters</legend>
 			<label>Character Icon (Lower right icon)
-				<input type="file" accept="image/*" name="charactersIcon" id="characters_icon">
+				<input type="file" accept="image/*" name="charactersIcon" onchange="cropImage(this.files[0], this)" id="characters_icon">
 			</label>
 			<br>
 			<button type="button" onclick="addCard('characters')" id="characters_add">+</button>
@@ -36,14 +44,14 @@
 		<fieldset id="challenges">
 			<legend>Challenges</legend>
 			<label>Challenge Icon
-				<input type="file" accept="image/*" name="challengesIcon" id="challenges_icon">
+				<input type="file" accept="image/*" name="challengesIcon" onchange="cropImage(this.files[0], this)" id="challenges_icon">
 			</label>
 			<br>
 			<button type="button" onclick="addCard('challenges')" id="challenges_add">+</button>
 		</fieldset>
 	</div>
 
-<button type="button" onclick="generateImage()" class="generate">Generate Image (Right Click and Save as Image to save)</button>
+<button type="button" onclick="generateImage()" class="generate" style="margin-top: 8px; margin-bottom: 8px;">Generate Image (Right Click and Save as Image to save)</button>
 
 </form>
 
