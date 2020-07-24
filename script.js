@@ -15,7 +15,6 @@ Cropper.setDefaults({viewMode: 1, minContainerWidth: 1, minContainerHeight: 1, r
 function readImage(file, image) {
   const reader = new FileReader();
   reader.onload = function() {
-    image.crossOrigin = "anonymous";
     image.src = reader.result;
   }
   reader.readAsDataURL(file);
@@ -187,6 +186,7 @@ function generateImage() {
     if (images[i].image !== undefined) {
       images[i].image.onload = function() {
         c.drawImage(images[i].image, images[i].cropX, images[i].cropY, images[i].width, images[i].height, posX + 138, posY + 328, 130, 130);
+        downloadButton.href = canvas.toDataURL();
       }
     }
     if (i < charactersText.length && charactersIcon.image !== undefined) {
@@ -194,6 +194,7 @@ function generateImage() {
         c.filter = "grayscale(100%)";
         c.drawImage(charactersIcon.image, charactersIcon.cropX, charactersIcon.cropY, charactersIcon.width, charactersIcon.height, posX + 347, posY + 526, 38, 38);
         c.filter = "none";
+        downloadButton.href = canvas.toDataURL();
       });
     }
     else if (challengesIcon.image !== undefined) {
@@ -201,8 +202,8 @@ function generateImage() {
         c.filter = "grayscale(100%)";
         c.drawImage(challengesIcon.image, challengesIcon.cropX, challengesIcon.cropY, challengesIcon.width, challengesIcon.height, posX + 347, posY + 526, 38, 38);
         c.filter = "none";
+        downloadButton.href = canvas.toDataURL();
       });
     }
   }
-  downloadButton.href = canvas.toDataURL();
 }
