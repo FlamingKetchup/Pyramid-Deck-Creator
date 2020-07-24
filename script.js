@@ -1,5 +1,4 @@
 const background = document.createElement("img");
-//background.crossOrigin = "anonymous";
 background.src = "card_background.png";
 var modalBackground, modal, modalImage, modalButton, downloadButton, canvas;
 window.onload = function() {
@@ -16,6 +15,7 @@ Cropper.setDefaults({viewMode: 1, minContainerWidth: 1, minContainerHeight: 1, r
 function readImage(file, image) {
   const reader = new FileReader();
   reader.onload = function() {
+    image.crossOrigin = "anonymous";
     image.src = reader.result;
   }
   reader.readAsDataURL(file);
