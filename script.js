@@ -1,6 +1,6 @@
 const background = document.createElement("img");
 background.src = "card_background.png";
-var modalBackground, modal, modalImage, modalButton, downloadButton, canvas;
+var modalBackground, modal, modalImage, modalButton, downloadButton, canvas, c;
 window.onload = function() {
   modalBackground = document.getElementById("cropModalBackground");
   modal = document.getElementById("cropModal");
@@ -8,6 +8,14 @@ window.onload = function() {
   modalButton = document.getElementById("modalButton");
   downloadButton = document.getElementById("downloadButton");
   canvas = document.getElementById("preview");
+  c = canvas.getContext("2d");
+  c.font = "48px Kreon";
+  c.textAlign = "center";
+  c.textBaseline = "top";
+  c.fillStyle = "white";
+  c.webkitImageSmoothingEnabled = false;
+  c.mozImageSmoothingEnabled = false;
+  c.imageSmoothingEnabled = false;
 }
 Cropper.setDefaults({viewMode: 1, minContainerWidth: 1, minContainerHeight: 1, restore: false, autoCropArea: 1, toggleDragModeOnDblclick: false, cropBoxMovable: false});
 
@@ -115,12 +123,6 @@ function generateImage() {
         var challengesIcon = {image: i.files[0], width: i.dataset.width, cropX: i.dataset.cropX, cropY: i.dataset.cropY, height: i.dataset.height};
     }
   }
-
-  var c = canvas.getContext("2d");
-  c.font = "48px Kreon";
-  c.textAlign = "center";
-  c.textBaseline = "top";
-  c.fillStyle = "white";
 
   c.clearRect(0, 0, canvas.width, canvas.height);
 
