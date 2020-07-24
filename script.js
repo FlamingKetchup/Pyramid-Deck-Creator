@@ -1,18 +1,21 @@
 const background = document.createElement("img");
+//background.crossOrigin = "anonymous";
 background.src = "card_background.png";
-var modalBackground, modal, modalImage, modalButton;
-window.onload = function () {
+var modalBackground, modal, modalImage, modalButton, downloadButton, canvas;
+window.onload = function() {
   modalBackground = document.getElementById("cropModalBackground");
   modal = document.getElementById("cropModal");
   modalImage = document.getElementById("modalImage");
   modalButton = document.getElementById("modalButton");
+  downloadButton = document.getElementById("downloadButton");
+  canvas = document.getElementById("preview");
 }
 Cropper.setDefaults({viewMode: 1, minContainerWidth: 1, minContainerHeight: 1, restore: false, autoCropArea: 1, toggleDragModeOnDblclick: false, cropBoxMovable: false});
 
 //Takes the file and puts it into the image
 function readImage(file, image) {
   const reader = new FileReader();
-  reader.onload = function () {
+  reader.onload = function() {
     image.src = reader.result;
   }
   reader.readAsDataURL(file);
@@ -21,17 +24,18 @@ function readImage(file, image) {
 //Takes the file, crops it, and returns how to clip it
 function cropImage(file, writeTarget) {
   const reader = new FileReader();
-  reader.onload = function () {
+  reader.onload = function() {
     modalImage.src = reader.result;
-    modalImage.onload = function () {
+    modalImage.onload = function() {
       const cropper = new Cropper(modalImage, {ready () {
-        modalButton.onclick = function () {
+        modalButton.onclick = function() {
           writeTarget.dataset.cropX = cropper.getData({rounded: true}).x;
           writeTarget.dataset.cropY = cropper.getData({rounded: true}).y;
           writeTarget.dataset.width = cropper.getData({rounded: true}).width;
           writeTarget.dataset.height = cropper.getData({rounded: true}).height;
           cropper.destroy();
           modalBackground.style.display = "none";
+          generateImage();
         }
       }});
       modalBackground.style.display = "block";
@@ -51,15 +55,19 @@ function addCard(targetList) {
   textField.placeholder = "Card text";
   textField.setAttribute("maxlength", "62");
   textField.name = targetList + "TextField";
+  textField.onchange = function() {
+    generateImage();
+  }
   imageUpload.type = "file";
   imageUpload.accept = "image/*";
   imageUpload.name = targetList + "ImageUpload";
-  imageUpload.onchange = function () {
+  imageUpload.onchange = function() {
     cropImage(this.files[0], this);
   }
   removeButton.type = "button";
-  removeButton.onclick = function () {
-    return this.parentNode.remove();
+  removeButton.onclick = function() {
+    this.parentNode.remove();
+    generateImage();
   }
   removeButton.appendChild(document.createTextNode("Delete"));
 
@@ -71,6 +79,7 @@ function addCard(targetList) {
   div.appendChild(imageUpload);
   div.appendChild(removeButton);
   div.appendChild(document.createElement("br"));
+  generateImage();
 }
 
 //Renders the cards onto the canvas element with id="preview"
@@ -108,7 +117,6 @@ function generateImage() {
     }
   }
 
-  var canvas = document.getElementById("preview");
   var c = canvas.getContext("2d");
   c.font = "48px Kreon";
   c.textAlign = "center";
@@ -195,6 +203,6 @@ function generateImage() {
         c.filter = "none";
       });
     }
-
   }
+  downloadButton.href = canvas.toDataURL();
 }

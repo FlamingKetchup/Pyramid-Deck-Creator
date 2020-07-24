@@ -27,7 +27,7 @@
 	<div class="border_container">
 		<br>
 		<label>Card Border
-			<input type="color" name="borderColor" id="border_color">
+			<input type="color" name="borderColor" onchange="generateImage()" id="border_color">
 		</label>
 	</div>
 
@@ -51,9 +51,11 @@
 		</fieldset>
 	</div>
 
-<button type="button" onclick="generateImage()" class="generate" style="margin-top: 8px; margin-bottom: 8px;">Generate Image (Right Click and Save as Image to save)</button>
-
 </form>
+
+<a download="pyramid_deck.png" id="downloadButton">
+	<button class="generate" style="margin-top: 8px; margin-bottom: 8px;">Download as Image</button>
+</a>
 
 <canvas width="4096" height="4096" id="preview">
 
