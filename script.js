@@ -20,6 +20,7 @@ window.onload = function() {
 Cropper.setDefaults({viewMode: 1, minContainerWidth: 1, minContainerHeight: 1, restore: false, autoCropArea: 1, toggleDragModeOnDblclick: false, cropBoxMovable: false});
 
 //Takes the file and puts it into the image
+/*
 function readImage(file, image) {
   const reader = new FileReader();
   reader.onload = function() {
@@ -27,7 +28,7 @@ function readImage(file, image) {
   }
   reader.readAsDataURL(file);
 }
-
+*/
 //Takes the file, crops it, and returns how to clip it
 function cropImage(file, writeTarget) {
   const reader = new FileReader();
@@ -36,6 +37,7 @@ function cropImage(file, writeTarget) {
     modalImage.onload = function() {
       const cropper = new Cropper(modalImage, {ready () {
         modalButton.onclick = function() {
+          writeTarget.dataset.image = reader.result;
           writeTarget.dataset.cropX = cropper.getData({rounded: true}).x;
           writeTarget.dataset.cropY = cropper.getData({rounded: true}).y;
           writeTarget.dataset.width = cropper.getData({rounded: true}).width;
@@ -111,16 +113,16 @@ function generateImage() {
         challengesText.push(i.value);
         break;
       case "charactersImageUpload":
-        charactersImages.push({image: i.files[0], width: i.dataset.width, cropX: i.dataset.cropX, cropY: i.dataset.cropY, height: i.dataset.height});
+        charactersImages.push({image: i.dataset.image, width: i.dataset.width, cropX: i.dataset.cropX, cropY: i.dataset.cropY, height: i.dataset.height});
         break;
       case "challengesImageUpload":
-        challengesImages.push({image: i.files[0], width: i.dataset.width, cropX: i.dataset.cropX, cropY: i.dataset.cropY, height: i.dataset.height});
+        challengesImages.push({image: i.dataset.image, width: i.dataset.width, cropX: i.dataset.cropX, cropY: i.dataset.cropY, height: i.dataset.height});
         break;
       case "charactersIcon":
-        var charactersIcon = {image: i.files[0], width: i.dataset.width, cropX: i.dataset.cropX, cropY: i.dataset.cropY, height: i.dataset.height};
+        var charactersIcon = {image: i.dataset.image, width: i.dataset.width, cropX: i.dataset.cropX, cropY: i.dataset.cropY, height: i.dataset.height};
         break;
       case "challengesIcon":
-        var challengesIcon = {image: i.files[0], width: i.dataset.width, cropX: i.dataset.cropX, cropY: i.dataset.cropY, height: i.dataset.height};
+        var challengesIcon = {image: i.dataset.image, width: i.dataset.width, cropX: i.dataset.cropX, cropY: i.dataset.cropY, height: i.dataset.height};
     }
   }
 
@@ -155,20 +157,20 @@ function generateImage() {
     if (images[i].image !== undefined) {
       tempFile = images[i].image;
       images[i].image = document.createElement("img");
-      readImage(tempFile, images[i].image);
+      images[i].image.src = tempFile;
     }
   }
 
   if (charactersIcon.image !== undefined) {
     tempFile = charactersIcon.image;
     charactersIcon.image = document.createElement("img");
-    readImage(tempFile, charactersIcon.image);
+    charactersIcon.image.src = tempFile;
   }
 
   if (challengesIcon.image !== undefined) {
     tempFile = challengesIcon.image;
     challengesIcon.image = document.createElement("img");
-    readImage(tempFile, challengesIcon.image);
+    challengesIcon.image.src = tempFile;
   }
 
   //Actually rendering cards
@@ -187,14 +189,14 @@ function generateImage() {
     }
     if (images[i].image !== undefined) {
       images[i].image.onload = function() {
-        c.drawImage(images[i].image, images[i].cropX, images[i].cropY, images[i].width, images[i].height, posX + 138, posY + 328, 130, 130);
+        c.drawImage(images[i].image, images[i].cropX, images[i].cropY, images[i].width, images[i].height, posX + 203 - (images[i].width * 130 / images[i].width) / 2, posY + 328, images[i].width * 130/images[i].width, images[i].height * 130 / images[i].width);
         downloadButton.href = canvas.toDataURL();
       }
     }
     if (i < charactersText.length && charactersIcon.image !== undefined) {
       charactersIcon.image.addEventListener("load", function() {
         c.filter = "grayscale(100%)";
-        c.drawImage(charactersIcon.image, charactersIcon.cropX, charactersIcon.cropY, charactersIcon.width, charactersIcon.height, posX + 347, posY + 526, 38, 38);
+        c.drawImage(charactersIcon.image, charactersIcon.cropX, charactersIcon.cropY, charactersIcon.width, charactersIcon.height, posX + 366 - (charactersIcon.width * 38 / charactersIcon.width) / 2, posY + 526, charactersIcon.width * 38 / charactersIcon.width, charactersIcon.height * 38 / charactersIcon.width);
         c.filter = "none";
         downloadButton.href = canvas.toDataURL();
       });
@@ -202,7 +204,7 @@ function generateImage() {
     else if (challengesIcon.image !== undefined) {
       charactersIcon.image.addEventListener("load", function() {
         c.filter = "grayscale(100%)";
-        c.drawImage(challengesIcon.image, challengesIcon.cropX, challengesIcon.cropY, challengesIcon.width, challengesIcon.height, posX + 347, posY + 526, 38, 38);
+        c.drawImage(challengesIcon.image, challengesIcon.cropX, challengesIcon.cropY, challengesIcon.width, challengesIcon.height, posX + 366 - (challengesIcon.width * 38 / challengesIcon.width) / 2, posY + 526, challengesIcon.width * 38 / challengesIcon.width, challengesIcon.height * 38 / challengesIcon.width);
         c.filter = "none";
         downloadButton.href = canvas.toDataURL();
       });
