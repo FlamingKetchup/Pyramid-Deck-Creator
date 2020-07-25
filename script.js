@@ -189,22 +189,26 @@ function generateImage() {
     }
     if (images[i].image !== undefined) {
       images[i].image.onload = function() {
-        c.drawImage(images[i].image, images[i].cropX, images[i].cropY, images[i].width, images[i].height, posX + 203 - (images[i].width * 130 / images[i].width) / 2, posY + 328, images[i].width * 130/images[i].width, images[i].height * 130 / images[i].width);
+        const scaleFactor = 130 / Math.max(images[i].width, images[i].height);
+        c.drawImage(images[i].image, images[i].cropX, images[i].cropY, images[i].width, images[i].height, posX + 203 - (images[i].width * scaleFactor) / 2, posY + 393 - (images[i].height * scaleFactor) / 2, images[i].width * scaleFactor, images[i].height * scaleFactor);
         downloadButton.href = canvas.toDataURL();
       }
     }
     if (i < charactersText.length && charactersIcon.image !== undefined) {
       charactersIcon.image.addEventListener("load", function() {
+        const scaleFactor = 38 / Math.max(charactersIcon.width, charactersIcon.height);
         c.filter = "grayscale(100%)";
-        c.drawImage(charactersIcon.image, charactersIcon.cropX, charactersIcon.cropY, charactersIcon.width, charactersIcon.height, posX + 366 - (charactersIcon.width * 38 / charactersIcon.width) / 2, posY + 526, charactersIcon.width * 38 / charactersIcon.width, charactersIcon.height * 38 / charactersIcon.width);
+        c.drawImage(charactersIcon.image, charactersIcon.cropX, charactersIcon.cropY, charactersIcon.width, charactersIcon.height, posX + 366 - (charactersIcon.width * scaleFactor) / 2, posY + 545 - (charactersIcon.height * scaleFactor) / 2, charactersIcon.width * scaleFactor, charactersIcon.height * scaleFactor);
         c.filter = "none";
         downloadButton.href = canvas.toDataURL();
       });
     }
     else if (challengesIcon.image !== undefined) {
-      charactersIcon.image.addEventListener("load", function() {
+      challengesIcon.image.addEventListener("load", function() {
+        const scaleFactor = 38 / Math.max(challengesIcon.width, challengesIcon.height);
         c.filter = "grayscale(100%)";
-        c.drawImage(challengesIcon.image, challengesIcon.cropX, challengesIcon.cropY, challengesIcon.width, challengesIcon.height, posX + 366 - (challengesIcon.width * 38 / challengesIcon.width) / 2, posY + 526, challengesIcon.width * 38 / challengesIcon.width, challengesIcon.height * 38 / challengesIcon.width);
+        console.log(challengesIcon);
+        c.drawImage(challengesIcon.image, challengesIcon.cropX, challengesIcon.cropY, challengesIcon.width, challengesIcon.height, posX + 366 - (challengesIcon.width * scaleFactor) / 2, posY + 545 - (challengesIcon.height * scaleFactor) / 2, challengesIcon.width * scaleFactor, challengesIcon.height * scaleFactor);
         c.filter = "none";
         downloadButton.href = canvas.toDataURL();
       });
