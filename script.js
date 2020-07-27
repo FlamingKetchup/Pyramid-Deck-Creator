@@ -1,4 +1,6 @@
 const background = document.createElement("img");
+const charIconImg = document.createElement("img");
+const chalIconImg = document.createElement("img");
 background.src = "card_background.png";
 var modalBackground, modal, modalImage, modalButton, downloadButton, canvas, c;
 window.onload = function() {
@@ -17,18 +19,9 @@ window.onload = function() {
   c.mozImageSmoothingEnabled = false;
   c.imageSmoothingEnabled = false;
 }
-Cropper.setDefaults({viewMode: 1, minContainerWidth: 1, minContainerHeight: 1, restore: false, autoCropArea: 1, toggleDragModeOnDblclick: false, cropBoxMovable: false});
 
-//Takes the file and puts it into the image
-/*
-function readImage(file, image) {
-  const reader = new FileReader();
-  reader.onload = function() {
-    image.src = reader.result;
-  }
-  reader.readAsDataURL(file);
-}
-*/
+Cropper.setDefaults({viewMode: 1, minContainerWidth: 1, minContainerHeight: 1, autoCropArea: 1, toggleDragModeOnDblclick: false, cropBoxMovable: false});
+
 //Takes the file, crops it, and returns how to clip it
 function cropImage(file, writeTarget) {
   const reader = new FileReader();
@@ -37,14 +30,16 @@ function cropImage(file, writeTarget) {
     modalImage.onload = function() {
       const cropper = new Cropper(modalImage, {ready () {
         modalButton.onclick = function() {
-          writeTarget.dataset.image = reader.result;
+          writeTarget.src = reader.result;
           writeTarget.dataset.cropX = cropper.getData({rounded: true}).x;
           writeTarget.dataset.cropY = cropper.getData({rounded: true}).y;
           writeTarget.dataset.width = cropper.getData({rounded: true}).width;
           writeTarget.dataset.height = cropper.getData({rounded: true}).height;
           cropper.destroy();
           modalBackground.style.display = "none";
-          generateImage();
+          writeTarget.onload = function() {
+            generateImage();
+          }
         }
       }});
       modalBackground.style.display = "block";
@@ -59,6 +54,7 @@ function addCard(targetList) {
   const textField = document.createElement("input");
   const imageUpload = document.createElement("input");
   const removeButton = document.createElement("button");
+  const imageStorage = document.createElement("img");
 
   textField.type = "text";
   textField.placeholder = "Card text";
@@ -71,7 +67,7 @@ function addCard(targetList) {
   imageUpload.accept = "image/*";
   imageUpload.name = targetList + "ImageUpload";
   imageUpload.onchange = function() {
-    cropImage(this.files[0], this);
+    cropImage(this.files[0], imageStorage);
   }
   removeButton.type = "button";
   removeButton.onclick = function() {
@@ -80,6 +76,8 @@ function addCard(targetList) {
   }
   removeButton.appendChild(document.createTextNode("Delete"));
 
+  imageStorage.style.display = "none";
+
   const cardList = document.getElementById(targetList);
   const button = document.getElementById(targetList + '_add');
 
@@ -87,6 +85,7 @@ function addCard(targetList) {
   div.appendChild(textField);
   div.appendChild(imageUpload);
   div.appendChild(removeButton);
+  div.appendChild(imageStorage);
   div.appendChild(document.createElement("br"));
   generateImage();
 }
@@ -98,7 +97,8 @@ function generateImage() {
   var charactersImages = [];
   var challengesText = [];
   var challengesImages = [];
-  var challengesImagesCropData = [];
+  var charIcon = {image: charIconImg, width: charIconImg.dataset.width, cropX: charIconImg.dataset.cropX, cropY: charIconImg.dataset.cropY, height: charIconImg.dataset.height};
+  var chalIcon = {image: chalIconImg, width: chalIconImg.dataset.width, cropX: chalIconImg.dataset.cropX, cropY: chalIconImg.dataset.cropY, height: chalIconImg.dataset.height};
 
   //Organizing user input
   for (i of form.elements) {
@@ -113,16 +113,11 @@ function generateImage() {
         challengesText.push(i.value);
         break;
       case "charactersImageUpload":
-        charactersImages.push({image: i.dataset.image, width: i.dataset.width, cropX: i.dataset.cropX, cropY: i.dataset.cropY, height: i.dataset.height});
+        console.log(i.parentNode.getElementsByTagName("img")[0]);
+        charactersImages.push({image: i.parentNode.getElementsByTagName("img")[0], width: i.parentNode.getElementsByTagName("img")[0].dataset.width, cropX: i.parentNode.getElementsByTagName("img")[0].dataset.cropX, cropY: i.parentNode.getElementsByTagName("img")[0].dataset.cropY, height: i.parentNode.getElementsByTagName("img")[0].dataset.height});
         break;
       case "challengesImageUpload":
-        challengesImages.push({image: i.dataset.image, width: i.dataset.width, cropX: i.dataset.cropX, cropY: i.dataset.cropY, height: i.dataset.height});
-        break;
-      case "charactersIcon":
-        var charactersIcon = {image: i.dataset.image, width: i.dataset.width, cropX: i.dataset.cropX, cropY: i.dataset.cropY, height: i.dataset.height};
-        break;
-      case "challengesIcon":
-        var challengesIcon = {image: i.dataset.image, width: i.dataset.width, cropX: i.dataset.cropX, cropY: i.dataset.cropY, height: i.dataset.height};
+        challengesImages.push({image: i.parentNode.getElementsByTagName("img")[0], width: i.parentNode.getElementsByTagName("img")[0].dataset.width, cropX: i.parentNode.getElementsByTagName("img")[0].dataset.cropX, cropY: i.parentNode.getElementsByTagName("img")[0].dataset.cropY, height: i.parentNode.getElementsByTagName("img")[0].dataset.height});
     }
   }
 
@@ -151,28 +146,6 @@ function generateImage() {
     text[i].push(tempString);
   }
 
-  //Process image files into images
-  var tempImage;
-  for (var i = 0; i < images.length; i++) {
-    if (images[i].image !== undefined) {
-      tempFile = images[i].image;
-      images[i].image = document.createElement("img");
-      images[i].image.src = tempFile;
-    }
-  }
-
-  if (charactersIcon.image !== undefined) {
-    tempFile = charactersIcon.image;
-    charactersIcon.image = document.createElement("img");
-    charactersIcon.image.src = tempFile;
-  }
-
-  if (challengesIcon.image !== undefined) {
-    tempFile = challengesIcon.image;
-    challengesIcon.image = document.createElement("img");
-    challengesIcon.image.src = tempFile;
-  }
-
   //Actually rendering cards
   for (let i = 0; i < text.length; i++) {
     let posX = i % 10 * 410;
@@ -188,30 +161,23 @@ function generateImage() {
       c.fillText(text[i][j], posX + 203, posY + 55 + j * 48);
     }
     if (images[i].image !== undefined) {
-      images[i].image.onload = function() {
-        const scaleFactor = 130 / Math.max(images[i].width, images[i].height);
-        c.drawImage(images[i].image, images[i].cropX, images[i].cropY, images[i].width, images[i].height, posX + 203 - (images[i].width * scaleFactor) / 2, posY + 393 - (images[i].height * scaleFactor) / 2, images[i].width * scaleFactor, images[i].height * scaleFactor);
-        downloadButton.href = canvas.toDataURL();
-      }
+      const scaleFactor = 130 / Math.max(images[i].width, images[i].height);
+      c.drawImage(images[i].image, images[i].cropX, images[i].cropY, images[i].width, images[i].height, posX + 203 - (images[i].width * scaleFactor) / 2, posY + 393 - (images[i].height * scaleFactor) / 2, images[i].width * scaleFactor, images[i].height * scaleFactor);
     }
-    if (i < charactersText.length && charactersIcon.image !== undefined) {
-      charactersIcon.image.addEventListener("load", function() {
-        const scaleFactor = 38 / Math.max(charactersIcon.width, charactersIcon.height);
-        c.filter = "grayscale(100%)";
-        c.drawImage(charactersIcon.image, charactersIcon.cropX, charactersIcon.cropY, charactersIcon.width, charactersIcon.height, posX + 366 - (charactersIcon.width * scaleFactor) / 2, posY + 545 - (charactersIcon.height * scaleFactor) / 2, charactersIcon.width * scaleFactor, charactersIcon.height * scaleFactor);
-        c.filter = "none";
-        downloadButton.href = canvas.toDataURL();
-      });
+    if (i < charactersText.length && charIcon.image !== undefined) {
+      const scaleFactor = 38 / Math.max(charIcon.width, charIcon.height);
+      c.filter = "grayscale(100%)";
+      c.drawImage(charIcon.image, charIcon.cropX, charIcon.cropY, charIcon.width, charIcon.height, posX + 366 - (charIcon.width * scaleFactor) / 2, posY + 545 - (charIcon.height * scaleFactor) / 2, charIcon.width * scaleFactor, charIcon.height * scaleFactor);
+      c.filter = "none";
     }
-    else if (challengesIcon.image !== undefined) {
-      challengesIcon.image.addEventListener("load", function() {
-        const scaleFactor = 38 / Math.max(challengesIcon.width, challengesIcon.height);
-        c.filter = "grayscale(100%)";
-        console.log(challengesIcon);
-        c.drawImage(challengesIcon.image, challengesIcon.cropX, challengesIcon.cropY, challengesIcon.width, challengesIcon.height, posX + 366 - (challengesIcon.width * scaleFactor) / 2, posY + 545 - (challengesIcon.height * scaleFactor) / 2, challengesIcon.width * scaleFactor, challengesIcon.height * scaleFactor);
-        c.filter = "none";
-        downloadButton.href = canvas.toDataURL();
-      });
+    else if (chalIcon.image !== undefined) {
+      const scaleFactor = 38 / Math.max(chalIcon.width, chalIcon.height);
+      c.filter = "grayscale(100%)";
+      c.drawImage(chalIcon.image, chalIcon.cropX, chalIcon.cropY, chalIcon.width, chalIcon.height, posX + 366 - (chalIcon.width * scaleFactor) / 2, posY + 545 - (chalIcon.height * scaleFactor) / 2, chalIcon.width * scaleFactor, chalIcon.height * scaleFactor);
+      c.filter = "none";
     }
   }
+
+  downloadButton.href = canvas.toDataURL();
+
 }

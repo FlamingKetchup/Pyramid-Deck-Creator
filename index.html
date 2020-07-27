@@ -5,8 +5,8 @@
 
 <title>Pyramid Deck Creator</title>
 <link rel="icon" type="image/png" href="favicon32x32.png">
-<link rel="stylesheet" href="stylesheet.css">
 <link rel="stylesheet" href="dist/cropper.min.css">
+<link rel="stylesheet" href="stylesheet.css">
 <span style="font-family: Kreon"></span>
 <script src="dist/cropper.min.js"></script>
 <script src="script.js"></script>
@@ -35,7 +35,7 @@
 		<fieldset id="characters">
 			<legend>Characters</legend>
 			<label>Characters Icon (Lower right icon)
-				<input type="file" accept="image/*" name="charactersIcon" onchange="cropImage(this.files[0], this)" id="characters_icon">
+				<input type="file" accept="image/*" name="charIcon" onchange="cropImage(this.files[0], charIconImg)" id="characters_icon">
 			</label>
 			<br>
 			<button type="button" onclick="addCard('characters')" id="characters_add">+</button>
@@ -44,7 +44,7 @@
 		<fieldset id="challenges">
 			<legend>Challenges</legend>
 			<label>Challenges Icon
-				<input type="file" accept="image/*" name="challengesIcon" onchange="cropImage(this.files[0], this)" id="challenges_icon">
+				<input type="file" accept="image/*" name="chalIcon" onchange="cropImage(this.files[0], chalIconImg)" id="challenges_icon">
 			</label>
 			<br>
 			<button type="button" onclick="addCard('challenges')" id="challenges_add">+</button>
@@ -57,6 +57,6 @@
 	<button class="generate" style="margin-top: 8px; margin-bottom: 8px;">Download as Image</button>
 </a>
 
-<canvas width="4096" height="4096" id="preview">
+<canvas width="4096" height="4096" id="preview">There was an error with the canvas</canvas>
 
 </body>

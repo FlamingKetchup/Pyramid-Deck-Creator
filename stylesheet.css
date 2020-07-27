@@ -3,6 +3,12 @@
 	src: url(Kreon-Bold.ttf);
 }
 
+span.cropper-point, span.cropper-point.point-se {
+	opacity: 0;
+	width: 4px;
+	height: 4px;
+}
+
 div.modal-background {
 	display: none;
 	position: fixed;
@@ -37,15 +43,6 @@ button.generate {
 
 input {
 	margin-bottom: 6px;
-}
-
-input[type="range"] {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	height: 0;
-	-webkit-appearance: none;
-	pointer-events: none;
 }
 
 hr {
