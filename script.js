@@ -58,7 +58,7 @@ function addCard(targetList) {
 
   textField.type = "text";
   textField.placeholder = "Card text";
-  textField.setAttribute("maxlength", "62");
+  textField.setAttribute("maxlength", "65");
   textField.name = targetList + "TextField";
   textField.onchange = function() {
     generateImage();
@@ -113,7 +113,6 @@ function generateImage() {
         challengesText.push(i.value);
         break;
       case "charactersImageUpload":
-        console.log(i.parentNode.getElementsByTagName("img")[0]);
         charactersImages.push({image: i.parentNode.getElementsByTagName("img")[0], width: i.parentNode.getElementsByTagName("img")[0].dataset.width, cropX: i.parentNode.getElementsByTagName("img")[0].dataset.cropX, cropY: i.parentNode.getElementsByTagName("img")[0].dataset.cropY, height: i.parentNode.getElementsByTagName("img")[0].dataset.height});
         break;
       case "challengesImageUpload":
@@ -161,7 +160,7 @@ function generateImage() {
       c.fillText(text[i][j], posX + 203, posY + 55 + j * 48);
     }
     if (images[i].image !== undefined) {
-      const scaleFactor = 130 / Math.max(images[i].width, images[i].height);
+      const scaleFactor = 170 / Math.max(images[i].width * 1.5, images[i].height);
       c.drawImage(images[i].image, images[i].cropX, images[i].cropY, images[i].width, images[i].height, posX + 203 - (images[i].width * scaleFactor) / 2, posY + 393 - (images[i].height * scaleFactor) / 2, images[i].width * scaleFactor, images[i].height * scaleFactor);
     }
     if (i < charactersText.length && charIcon.image !== undefined) {
