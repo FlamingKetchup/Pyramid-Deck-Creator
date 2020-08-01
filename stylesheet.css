@@ -9,6 +9,24 @@ span.cropper-point, span.cropper-point.point-se {
 	height: 4px;
 }
 
+span.tooltip {
+	border-bottom: 1px dotted;
+}
+
+span.tooltip_text {
+	visibility: hidden;
+	position: absolute;
+	transform: translateX(-50%) translateY(-100%);
+	z-index: 1;
+	padding: 4px 8px;
+	border-radius: 8px;
+	background-color: rgba(0, 0 ,0, 0.8);
+}
+
+span.tooltip:hover > span.tooltip_text {
+	visibility: visible;
+}
+
 div.modal-background {
 	display: none;
 	position: fixed;
@@ -32,6 +50,10 @@ div.border_container {
 	text-align: center;
 }
 
+div.button_container {
+	margin: 8px 0;
+}
+
 button.generate {
 	width: 100%;
 	background-color: DarkGray;
@@ -39,6 +61,10 @@ button.generate {
 	border: none;
 	color: white;
 	font-size: 16px;
+}
+
+button.generate:hover {
+	background-color: Gray;
 }
 
 input {
@@ -70,13 +96,4 @@ p, label {
 
 legend {
 	font-family: Verdana
-}
-
-#characters {
-	width: 50%;
-	float: left;
-}
-
-#challenges {
-	margin-left: 50%
 }

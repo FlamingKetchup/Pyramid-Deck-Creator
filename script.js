@@ -2,13 +2,14 @@ const background = document.createElement("img");
 const charIconImg = document.createElement("img");
 const chalIconImg = document.createElement("img");
 background.src = "card_background.png";
-var modalBackground, modal, modalImage, modalButton, downloadButton, canvas, c;
+var modalBackground, modal, modalImage, modalButton, downloadButton, jsonButton, canvas, c;
 window.onload = function() {
   modalBackground = document.getElementById("cropModalBackground");
   modal = document.getElementById("cropModal");
   modalImage = document.getElementById("modalImage");
   modalButton = document.getElementById("modalButton");
   downloadButton = document.getElementById("downloadButton");
+  jsonButton = document.getElementById("jsonButton");
   canvas = document.getElementById("preview");
   c = canvas.getContext("2d");
   c.font = "48px Kreon";
@@ -179,4 +180,7 @@ function generateImage() {
 
   downloadButton.href = canvas.toDataURL();
 
+  jsonButton.onclick = function() {
+    navigator.clipboard.writeText(', "Insert game name here": ' + JSON.stringify({"Main Objectives": charactersText, "Additional Objectives": challengesText}));
+  }
 }

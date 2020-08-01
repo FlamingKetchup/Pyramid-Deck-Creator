@@ -21,6 +21,7 @@
 		<button type="button" class="generate" id="modalButton">Crop</button>
 	</div>
 </div>
+
 <h1>Pyramid Deck Creator</h1>
 <hr>
 <form id="form">
@@ -31,31 +32,41 @@
 		</label>
 	</div>
 
-	<div>
-		<fieldset id="characters">
-			<legend>Characters</legend>
-			<label>Characters Icon (Lower right icon)
-				<input type="file" accept="image/*" name="charIcon" onchange="cropImage(this.files[0], charIconImg)" id="characters_icon">
-			</label>
-			<br>
-			<button type="button" onclick="addCard('characters')" id="characters_add">+</button>
-		</fieldset>
+	<div style="overflow: auto">
+		<div style="width: 50%; float: left;">
+			<fieldset id="characters">
+				<legend>Characters</legend>
+				<label>Characters Icon (Lower right icon)
+					<input type="file" accept="image/*" name="charIcon" onchange="cropImage(this.files[0], charIconImg)" id="characters_icon">
+				</label>
+				<br>
+				<button type="button" onclick="addCard('characters')" id="characters_add">+</button>
+			</fieldset>
+		</div>
 
-		<fieldset id="challenges">
-			<legend>Challenges</legend>
-			<label>Challenges Icon
-				<input type="file" accept="image/*" name="chalIcon" onchange="cropImage(this.files[0], chalIconImg)" id="challenges_icon">
-			</label>
-			<br>
-			<button type="button" onclick="addCard('challenges')" id="challenges_add">+</button>
-		</fieldset>
+		<div style="width: 50%; float: right;">
+			<fieldset id="challenges">
+				<legend>Challenges</legend>
+				<label>Challenges Icon
+					<input type="file" accept="image/*" name="chalIcon" onchange="cropImage(this.files[0], chalIconImg)" id="challenges_icon">
+				</label>
+				<br>
+				<button type="button" onclick="addCard('challenges')" id="challenges_add">+</button>
+			</fieldset>
+		</div>
 	</div>
 
 </form>
 
-<a download="pyramid_deck.png" id="downloadButton">
-	<button class="generate" style="margin-top: 8px; margin-bottom: 8px;">Download as Image</button>
-</a>
+<div class="button_container" style="float: left; width: 20%;">
+	<button type="button" class="generate" style="margin-right: 3px" id="jsonButton">Copy JSON to clipboard <span class="tooltip">?<span class="tooltip_text">Send this to DanEgbert on discord to have them add your deck to their bot</span></span></button>
+</div>
+
+<div class="button_container" style="float: right; width: 80%;">
+	<a download="pyramid_deck.png" id="downloadButton">
+		<button type="button" class="generate" style="margin-left: 3px">Download as Image</button>
+	</a>
+</div>
 
 <canvas width="4096" height="4096" id="preview">There was an error with the canvas</canvas>
 
