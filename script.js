@@ -23,7 +23,7 @@ window.onload = function() {
 
 Cropper.setDefaults({viewMode: 1, minContainerWidth: 1, minContainerHeight: 1, autoCropArea: 1, toggleDragModeOnDblclick: false, cropBoxMovable: false});
 
-//Takes the file, crops it, and returns how to clip it
+// Takes the file, crops it, and returns how to clip it
 function cropImage(file, writeTarget) {
   const reader = new FileReader();
   reader.onload = function() {
@@ -49,7 +49,7 @@ function cropImage(file, writeTarget) {
   reader.readAsDataURL(file);
 }
 
-//Adds a text and a file input to the target container
+// Adds a text and a file input to the target container
 function addCard(targetList) {
   const div = document.createElement("div");
   const textField = document.createElement("input");
@@ -91,7 +91,7 @@ function addCard(targetList) {
   generateImage();
 }
 
-//Renders the cards onto the canvas element with id="preview"
+// Renders the cards onto the canvas element with id="preview"
 function generateImage() {
   const form = document.getElementById("form");
   var charactersText = [];
@@ -101,7 +101,7 @@ function generateImage() {
   var charIcon = {image: charIconImg, width: charIconImg.dataset.width, cropX: charIconImg.dataset.cropX, cropY: charIconImg.dataset.cropY, height: charIconImg.dataset.height};
   var chalIcon = {image: chalIconImg, width: chalIconImg.dataset.width, cropX: chalIconImg.dataset.cropX, cropY: chalIconImg.dataset.cropY, height: chalIconImg.dataset.height};
 
-  //Organizing user input
+  // Organizing user input
   for (i of form.elements) {
     switch (i.name) {
       case "borderColor":
@@ -126,7 +126,7 @@ function generateImage() {
   text = [...charactersText, ...challengesText];
   images = [...charactersImages, ...challengesImages];
 
-//Split text into appropriately size chunks
+// Split text into appropriately size chunks
   var splitText, tempString;
   for (var i = 0; i < text.length; i++) {
     splitText = text[i].split(" ");
@@ -146,7 +146,7 @@ function generateImage() {
     text[i].push(tempString);
   }
 
-  //Actually rendering cards
+  // Actually rendering cards
   for (let i = 0; i < text.length; i++) {
     let posX = i % 10 * 410;
     let posY = Math.floor(i / 10) * 584;

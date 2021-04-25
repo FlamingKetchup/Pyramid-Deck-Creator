@@ -36,11 +36,11 @@
 		<div style="width: 50%; float: left;">
 			<fieldset id="characters">
 				<legend>Characters</legend>
-				<label>Characters Icon (Lower right icon)
+				<label>Characters Icon
 					<input type="file" accept="image/*" name="charIcon" onchange="cropImage(this.files[0], charIconImg)" id="characters_icon">
 				</label>
 				<br>
-				<button type="button" onclick="addCard('characters')" id="characters_add">+</button>
+				<button type="button" class="add" onclick="addCard('characters')" id="characters_add">+</button>
 			</fieldset>
 		</div>
 
@@ -51,7 +51,7 @@
 					<input type="file" accept="image/*" name="chalIcon" onchange="cropImage(this.files[0], chalIconImg)" id="challenges_icon">
 				</label>
 				<br>
-				<button type="button" onclick="addCard('challenges')" id="challenges_add">+</button>
+				<button type="button" class="add" onclick="addCard('challenges')" id="challenges_add">+</button>
 			</fieldset>
 		</div>
 	</div>
