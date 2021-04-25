@@ -119,3 +119,9 @@ p, label {
 legend {
 	font-family: Verdana
 }
+
+fieldset {
+	border-width: 1px;
+	border-color: darkgray;
+	border-style: solid;
+}
